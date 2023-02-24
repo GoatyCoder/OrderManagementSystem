@@ -1,0 +1,35 @@
+﻿<Window x:Class="OrderManagementSystem.Views.CategoryManagerView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OrderManagementSystem.Views"
+        mc:Ignorable="d"
+        Title="CategoryManagerView" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <WrapPanel Margin="5">
+                <Label Content="Categoria:"/>
+                <TextBox Name="categoryNameTextBox" Text="{Binding CategoryName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="120"/>
+            </WrapPanel>
+            <WrapPanel Margin="5">
+                <Button Content="Aggiungi" Margin="0,0,5,0" Command="{Binding AddCategoryCommand}"/>
+                <Button Content="Rimuovi" Margin="0,0,5,0" Command="{Binding RemoveCategoryCommand}"/>
+                <Button Content="Modifica" Margin="0,0,5,0" Command="{Binding EditCategoryCommand}"/>
+            </WrapPanel>
+        </StackPanel>
+        <ListView Name="categoriesListView" Grid.Row="1" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}" SelectionChanged="categoriesListView_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Header="Categoria" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn  Header="Num. Prod."/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>

@@ -1,0 +1,55 @@
+﻿<Window x:Class="OrderManagementSystem.Views.ProductManagerView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OrderManagementSystem.Views"
+        mc:Ignorable="d"
+        Title="ProductManagerView" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <WrapPanel>
+            <WrapPanel Margin="5">
+                <Label Content="Cod.:"/>
+                <TextBox Name="codeTextBox" Text="{Binding ProductCode, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="60"/>
+            </WrapPanel>
+            <WrapPanel Margin="5">
+                <Label Content="Nome:"/>
+                <TextBox Name="nameTextBox" Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="120"/>
+            </WrapPanel>
+            <WrapPanel Margin="5">
+                <Label Content="Categoria:"/>
+                <ComboBox Name="categoryComboBox" ItemsSource="{Binding Categories, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                          DisplayMemberPath="Name" SelectedItem="{Binding ProductCategory}" Width="120"/>
+            </WrapPanel>
+            <WrapPanel Margin="5">
+                <Label Content="Prezzo:"/>
+                <TextBox Name="priceTextBox" Text="{Binding ProductPrice, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="120"/>
+            </WrapPanel>
+            <WrapPanel Margin="5">
+                <Label Content="Descr.:"/>
+                <TextBox Name="descriptionTextBox" Text="{Binding ProductDescription, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="120"/>
+            </WrapPanel>
+            <WrapPanel Margin="5">
+                <Button Content="Aggiungi" Margin="0,0,5,0" Command="{Binding AddProductCommand}"/>
+                <Button Content="Rimuovi" Margin="0,0,5,0" Command="{Binding RemoveProductCommand}"/>
+                <Button Content="Modifica" Margin="0,0,5,0" Command="{Binding EditProductCommand}"/>
+            </WrapPanel>
+        </WrapPanel>
+        <ListView Name="productListView" Grid.Row="1" ItemsSource="{Binding Products}" SelectedItem="{Binding SelectedProduct}" SelectionChanged="productListView_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}"/>
+                    <GridViewColumn Header="Cod. Prod." DisplayMemberBinding="{Binding Code}"/>
+                    <GridViewColumn Header="Nome" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Categoria" DisplayMemberBinding="{Binding Category.Name}"/>
+                    <GridViewColumn Header="Prezzo" DisplayMemberBinding="{Binding Price}"/>
+                    <GridViewColumn  Header="Descrizione" DisplayMemberBinding="{Binding Description}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>

@@ -7,18 +7,16 @@ namespace OrderManagementSystem.ViewModels
 {
     public class UserManagerViewModel : ViewModelBase
     {
-        private readonly IUnitOfWork _unitOfWork;
-
         private string _firstName;
         private string _lastName;
         private string _email;
         private User _selectedUser;
         private BindingList<User> _users;
 
-        public UserManagerViewModel(IUnitOfWork unitOfWork)
+
+        public UserManagerViewModel(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            _unitOfWork = unitOfWork;
-            Users = new BindingList<User>((System.Collections.Generic.IList<User>)_unitOfWork.UserManager.GetAll());
+            Users = new BindingList<User>((System.Collections.Generic.IList<User>)this.unitOfWork.UserManager.GetAll());
         }
 
         public string FirstName
@@ -51,7 +49,6 @@ namespace OrderManagementSystem.ViewModels
             set { SetProperty(ref _users, value); }
         }
 
-
         public ICommand AddUserCommand => new RelayCommand(AddUser, CanAddUser);
         public ICommand RemoveUserCommand => new RelayCommand(RemoveUser, CanRemoveUser);
         public ICommand EditUserCommand => new RelayCommand(EditUser, CanEdituser);
@@ -59,8 +56,8 @@ namespace OrderManagementSystem.ViewModels
         private void AddUser()
         {
             User newUser = new User() { FirstName = this.FirstName, LastName = this.LastName, Email = this.Email };
-            _unitOfWork.UserManager.Add(newUser);
-            _unitOfWork.Save();
+            unitOfWork.UserManager.Add(newUser);
+            unitOfWork.Save();
 
             Users.Add(newUser);
             ClearForm();
@@ -77,10 +74,10 @@ namespace OrderManagementSystem.ViewModels
         {
             if (SelectedUser != null)
             {
-                _unitOfWork.UserManager.Remove(SelectedUser);
-                _unitOfWork.Save();
-                Users.Remove(SelectedUser);
+                unitOfWork.UserManager.Remove(SelectedUser);
+                unitOfWork.Save();
 
+                Users.Remove(SelectedUser);
                 ClearForm();
             }
         }
@@ -101,13 +98,14 @@ namespace OrderManagementSystem.ViewModels
                 if (this.Email != SelectedUser.Email)
                     SelectedUser.Email = this.Email;
 
-                _unitOfWork.Save();
+                unitOfWork.Save();
 
                 int index = Users.IndexOf(SelectedUser);
                 if (index >= 0)
                 {
                     Users.ResetItem(index);
                 }
+
                 ClearForm();
             }
         }

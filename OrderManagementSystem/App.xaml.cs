@@ -13,9 +13,19 @@ namespace OrderManagementSystem
 
             ApplicationDbContext context = new ApplicationDbContext();
             IUnitOfWork unitOfWork = new UnitOfWork(context);
-            UserManagerViewModel viewModel = new UserManagerViewModel(unitOfWork);
-            UserManagerView view = new UserManagerView(viewModel);
-            view.Show();
+
+            UserManagerViewModel userViewModel = new UserManagerViewModel(unitOfWork);
+            UserManagerView userView = new UserManagerView(userViewModel);
+
+            CategoryManagerViewModel categoryViewModel = new CategoryManagerViewModel(unitOfWork);
+            CategoryManagerView categoryView = new CategoryManagerView(categoryViewModel);
+
+            ProductManagerViewModel productViewModel = new ProductManagerViewModel(unitOfWork);
+            ProductManagerView productView = new ProductManagerView(productViewModel);
+
+            userView.Show();
+            categoryView.Show();
+            productView.Show();
         }
     }
 }
